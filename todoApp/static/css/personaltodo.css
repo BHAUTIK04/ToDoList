@@ -1,0 +1,22 @@
+a.card-link { 
+		font-weight: bold !important; 
+		color:#001100;	
+	}
+.myAlert-top-success{
+    position: fixed;
+    top: 70px; 
+    right:0px !important;
+    width: 96%;
+}
+.myAlert-top-error{
+    position: fixed;
+    top: 70px; 
+    right:0px !important;
+    width: 96%;
+}
+.alert{
+	display:none;
+}
+.modal{
+	margin-top:65px;
+}
