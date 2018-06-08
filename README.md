@@ -1,7 +1,7 @@
 # ToDoList
 App for todos.
 
-# Technologies Used
+## Technologies Used
 ```
 * Python 3
 * Django=1.11
@@ -16,6 +16,7 @@ To deploy this project:-
 
 ### Using virtualenv
 ```
+* Make sure your environment supports Python3
 * Create virtualenv with some name for python3 Eg:- virtualenv name --python=python3
 * Activate created virtualenv Eg:- source name/bin/activate
 * Go to project folder Here todo/
