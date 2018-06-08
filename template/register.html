@@ -5,86 +5,72 @@
 {% endblock %}
 {% block style %}
 
-.Absolute-Center {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-}
-.Absolute-Center.is-Responsive {
-  width: 100%;
-  height: 100%;
-  min-width: 300px;
-  max-width: 400px;
-  padding: 40px;
-}
-.btn{
-	border-radius:50px;
-}
-.myAlert-top{
-    position: fixed;
-    top: 70px;
-    right:0px !important;
-    width: 96%;
-}
+	.Absolute-Center {
+	  margin: auto;
+	  position: absolute;
+	  top: 0; left: 0; bottom: 0; right: 0;
+	}
+	.Absolute-Center.is-Responsive {
+	  width: 100%;
+	  height: 100%;
+	  min-width: 300px;
+	  max-width: 400px;
+	  padding: 40px;
+	}
+	.btn{
+		border-radius:50px;
+	}
+	.myAlert-top{
+	    position: fixed;
+	    top: 70px;
+	    right:0px !important;
+	    width: 96%;
+	}
 {% endblock %}
 
 {% block content %}
 
 	<div class="container">
-  <div class="row">
-    <div class="Absolute-Center is-Responsive">
-      <!-- <div id="logo-container"></div> -->
-      <div class="col-sm-12 col-md-10 col-md-offset-1" style="border: thin solid black;padding:20px;margin-top:30px; background-color: rgba(0, 0, 0, 0.5);">
-      	<h3 align="center" style="color:white;"><b>Register</b></h3>
-        <form action="/register" method="POST" id="loginForm">
-          <div class="form-group input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" name='fname' placeholder="First Name" required="First name required"/>
-          </div>
-          <div class="form-group input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" name='lname' placeholder="Last Name" required="Last name required" />
-          </div>
-          <div class="form-group input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" name='email' placeholder="Username/Email" required="Email required"/>
-          </div>
-          <div class="form-group input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input class="form-control" type="password" name='password' placeholder="Password" required="Password required"/>
-          </div>
-          <!-- <div class="form-group input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input class="form-control" type="password" name='cnfpassword' placeholder="Confirm Password" required="Confirm Password required"/>
-          </div> -->
+ 		<div class="row">
+   			<div class="Absolute-Center is-Responsive">
+				<div class="col-sm-12 col-md-10 col-md-offset-1" style="border: thin solid black;padding:20px;margin-top:30px; background-color: rgba(0, 0, 0, 0.5);">
+					<h3 align="center" style="color:white;"><b>Register</b></h3>
+					<form action="/register" method="POST" id="loginForm">
+						<div class="form-group input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					    	<input class="form-control" type="text" name='fname' placeholder="First Name" required="First name required"/>
+					  	</div>
+					  	<div class="form-group input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					    	<input class="form-control" type="text" name='lname' placeholder="Last Name" required="Last name required" />
+					  	</div>
+					  	<div class="form-group input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					    	<input class="form-control" type="text" name='email' placeholder="Username/Email" required="Email required"/>
+					  	</div>
+					  	<div class="form-group input-group">
+					    	<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+					    	<input class="form-control" type="password" name='password' placeholder="Password" required="Password required"/>
+					  	</div>
+						<div class="form-group">
+  							<button type="submit" class="btn btn-success btn-block">Register</button>
+						</div>
 
-          <div class="form-group">
-            <button type="submit" class="btn btn-success btn-block">Register</button>
-          </div>
-          <!-- <div>
-          	<a href="/login" style="color:#baffff;">Login</a>
-          </div> -->
-          <!-- <div class="form-group text-center">
-            <a href="#">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
-          </div> -->
-        </form>
-      </div>
+  					</form>
+				</div>
 
-      {% ifequal flag "error" %}
-
-      	<div class="myAlert-top alert alert-danger col-md-3">
-	  		<!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
-	  		<strong>Error!</strong> {{message}}
-		</div>
-	  {% endifequal %}
-	  {% ifequal flag "success" %}
-	  	<div class="myAlert-top alert alert-success col-md-3">
-	  		<!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
-	  		<strong>Success!</strong> {{message}}
-		</div>
-      {% endifequal %}
-    </div>
-  </div>
-</div>
+				{% ifequal flag "error" %}
+					<div class="myAlert-top alert alert-danger col-md-3">
+ 						<strong>Error!</strong> {{message}}
+					</div>
+				{% endifequal %}
+				{% ifequal flag "success" %}
+				 	<div class="myAlert-top alert alert-success col-md-3">
+				 		<strong>Success!</strong> {{message}}
+					</div>
+      			{% endifequal %}
+    		</div>
+  		</div>
+	</div>
 
 {% endblock %}

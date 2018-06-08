@@ -70,10 +70,8 @@ $(document).ready(function(){
 					
 			        $.ajax({
 			            url: '/statuschange',
-			            type: "POST",
-			            data: {
-			                "tid":id
-			            },
+			            type: "PUT",
+			            data: JSON.stringify({"tid":id}),
 			            success: function (response) {
 			            	successAlert();
 			                /* console.log(but); */

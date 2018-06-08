@@ -119,8 +119,8 @@ def todo_operation(request):
     try:
         if request.method == "GET":
             if request.user.is_authenticated():
-                tl = tasklist.objects.filter().order_by('created_at')
-                return render(request, "todo.html", {"tasklist":tl})
+                task_list = tasklist.objects.filter().order_by('created_at')
+                return render(request, "todo.html", {"tasklist":task_list})
             return HttpResponse("You are not logged in.")
         
         elif request.method == "POST":
@@ -131,15 +131,15 @@ def todo_operation(request):
             title = request_data.get("title", "")
             description = request_data.get("description", "")
             deadline = request_data.get("deadline", "")
-            tl = tasklist()
+            task_list_obj = tasklist()
             if title and description:
-                tl.user = request.user
-                tl.title = title
-                tl.description = description
+                task_list_obj.user = request.user
+                task_list_obj.title = title
+                task_list_obj.description = description
                 if deadline:
                     deadline = datetime.strptime(deadline,'%Y-%m-%d')
-                    tl.deadline = deadline
-                tl.save()
+                    task_list_obj.deadline = deadline
+                task_list_obj.save()
                 logger.info("Task created successfully {}".format(request_data))
                 return redirect("/todo")
             else:
@@ -150,32 +150,33 @@ def todo_operation(request):
         return redirect("/error")
 
 @csrf_exempt
+@login_required(login_url='/login')
 def change_status(request):
     '''
         To change task status if its Done than change to Undone and if its Undone than change to Done
     '''
     try:
-        if request.user.is_authenticated():
-            request_data = request.POST.dict()
+        if request.method == "PUT":
+            request_data = json.loads(request.body.decode('utf-8'))
             if request_data and request_data.get("tid", ""):
-                tl = tasklist.objects.get(id=request_data["tid"])
-                if tl.status:
-                    logger.error("status changed for task {} form Done to Undone".format(tl.id))
-                    tl.status = False
+                task_list = tasklist.objects.get(id=request_data["tid"])
+                if task_list.status:
+                    logger.info("status changed for task {} form Done to Undone".format(task_list.id))
+                    task_list.status = False
                 else:
-                    logger.error("status changed for task {} form Undone to Done".format(tl.id))
-                    tl.status = True
-                tl.status_change_by_id = request.user.id
-                tl.status_change_at = now()
-                tl.save()
+                    logger.info("status changed for task {} form Undone to Done".format(task_list.id))
+                    task_list.status = True
+                task_list.status_change_by_id = request.user.id
+                task_list.status_change_at = now()
+                task_list.save()
                 return HttpResponse(json.dumps({"message":"Status changed successfully"}), status=200, content_type="application/json")
             else:
                 return HttpResponse(json.dumps({"message":"task id not given"}), status=400, content_type="application/json")
         else:
-            return HttpResponse(json.dumps({"message":"Unauthorized user"}), status=401, content_type="application/json")
+            return HttpResponse(json.dumps({"message":"Method not allowed"}), status=503, content_type="application/json")
     except Exception as e:
         logger.error("Error in change status request {}".format(e))
-        return redirect("/error")
+        return HttpResponse(json.dumps({"message":"data format error"}), status=400, content_type="application/json")
 
 @csrf_exempt
 @login_required(login_url='/login')
@@ -198,8 +199,8 @@ def your_todo_operation(request):
     '''
     if request.method == "GET":
         try:
-            tl = tasklist.objects.filter(user=request.user)
-            return render(request, "personaltodo.html", {"tasklist": tl})
+            task_list = tasklist.objects.filter(user=request.user)
+            return render(request, "personaltodo.html", {"tasklist": task_list})
         except Exception as e:
             logger.error("Error in get all task {}".format(e))
             return redirect("/error")
@@ -213,12 +214,12 @@ def your_todo_operation(request):
             logger.info("Edit task request for task id {} ".format(tid))
             if tid and title and description:
                 tid = int(tid)
-                tl = tasklist.objects.get(id=tid)
-                tl.title = title
-                tl.description = description
-                tl.edited_at = now()
-                if tl.user.id  == request.user.id:
-                    tl.save()
+                task_list = tasklist.objects.get(id=tid)
+                task_list.title = title
+                task_list.description = description
+                task_list.edited_at = now()
+                if task_list.user.id  == request.user.id:
+                    task_list.save()
                     logger.info("task edited with task id {} ".format(tid))
                     return HttpResponse(json.dumps({"response":"done"}), status=200)
                 else:
