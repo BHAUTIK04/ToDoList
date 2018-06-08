@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Login
+{% endblock %}
+{% block style %}
+	.Absolute-Center {
+	  margin: auto;
+	  position: absolute;
+	  top: 0; left: 0; bottom: 0; right: 0;
+	}
+	.Absolute-Center.is-Responsive {
+	  width: 100%;
+	  height: 70%;
+	  min-width: 300px;
+	  max-width: 450px;
+	  padding: 40px;
+	}
+	.myAlert-top{
+	    position: fixed;
+	    top: 70px;
+	    right:0px !important;
+	    width: 96%;
+	}
+	.btn{
+		border-radius:50px;
+	}
+
+{% endblock %}
+
+{% block content %}
+
+	<div class="container">
+  <div class="row">
+    <div class="Absolute-Center is-Responsive">
+      <!-- <div id="logo-container"></div> -->
+      <div class="col-sm-12 col-md-10 col-md-offset-1" style="border: thin solid black;padding:20px; background-color: rgba(0, 0, 0, 0.5);">
+      	<h3 align="center" style="color:white;"><b>Login</b></h3>
+
+        <form action="/login" method="post" id="loginForm">
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input class="form-control focus" type="text" name='username' placeholder="Username"  required autofocus>
+            <!-- <input class="form-control mr-sm-2" type="search" id="searchfield" name="search" placeholder="Search" aria-label="Search" required autofocus><br> -->
+          </div>
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" name='password' placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-info btn-block">Login</button>
+          </div>
+          <!-- <div>
+          	<a href="/register" style="color:#baffff;">Not Registered?</a>
+          </div> -->
+          <!-- <div class="form-group text-center">
+            <a href="#">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
+          </div> -->
+        </form>
+      </div>
+
+      {% if message %}
+
+      	<div class="myAlert-top alert alert-danger col-md-3">
+	  		<!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+	  		<strong>Error!</strong> {{message}}
+		</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Your ToDo
+{% endblock %}
+{% block style1 %}
+	<link rel="stylesheet" href='{% static "css/personaltodo.css" %}'>
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid" style="margin-top:80px;">
+		<div class="row">
+		{% if tasklist %}
+			{% for i in tasklist %}
+			<div class="col-sm-3">
+				<div class="card" id="{{i.id}}card" >
+				  {% if i.status %}
+					  <div id="{{i.id}}cardheader" class="card-header" style="background-color:#61bd4f;">
+					  	<div class = "clearfix">
+					  		<span class="float-left">
+					  			<a class="card-link" id = "{{ i.id }}crdlink" data-toggle="collapse" href="#{{ i.id }}data">
+	        						{{ i.title }}
+	      						</a>
+	      					</span>
+	      					
+	      					<span class="float-right"><button type="button" data-id="{{ i.id }}" class="btn btn-sm btn-info editTaskButton"><i class="fas fa-edit"></i>Edit</button></span>
+						</div>
+					  </div>
+				  {% else %}
+				  	  <div id="{{i.id}}cardheader" class="card-header" style="background-color:#d29034;"">
+					  	<div class = "clearfix">
+						  	<a id="{{ i.id }}crdlink" class="card-link " data-toggle="collapse" href="#{{ i.id }}data">
+		        				{{ i.title }}
+		      				</a></span>
+		      				<span class="float-right"><button type="button" data-id="{{ i.id }}" class="btn btn-sm btn-info editTaskButton"><i class="fas fa-edit"></i>Edit</button></span>
+					  	</div>
+					  </div>
+				  {% endif %}
+				  <div id="{{ i.id }}data" class="collapse" data-parent="#accordion">
+				      <div class="card-body" style="overflow:auto;">
+				        <!-- <p class="card-text">Some text inside the first card</p> -->
+				        <dl>
+							<dt>Description:</dt>
+							<dd>{{ i.description }}</dd>
+							<dt>Created At:</dt>
+							<dd>{{ i.created_at }}</dd>
+							{% if i.deadline %}
+								<dt>Deadline:</dt>
+								<dd>{{ i.deadline }}</dd>
+							{% endif %}
+							<dt>Created By:</dt>
+							<dd style="text-align: justify;">{{ i.user.first_name }} {{ i.user.last_name }}</dd>
+							{% if i.status %}
+							  <dt>Status changed By:</dt>
+							  <dd>{{ i.status_change_by.first_name }} {{ i.status_change_by.last_name }}</dd>
+						  	{% endif %}
+						</dl>
+				      </div>
+				      <div class="clearfix" style="margin:10px;">
+				      	<span class="float-left">
+				      		{% if not i.status %}
+					        	<button type="button" data-id="{{ i.id }}" class="btn btn-success btn-sm statusEditButton">Mark As Done</button>
+					        {% else %}
+					        	<button type="button" data-id="{{ i.id }}" class="btn btn-success btn-sm statusEditButton">Mark As Undone</button>
+					        {% endif %}
+				      	</span>
+				      	<span class="float-right">
+				      		<button class="btn btn-md btn-danger deleteButton" data-id="{{i.id}}"><i class="fa fa-trash"></i></button>
+				      	</span>
+				      </div>
+				   </div>
+			    </div><br />
+			 </div>
+			{% endfor %}
+		{% else %}
+		<div class="col-md-12">
+			<h1 align="center"> No Task created By You </h1>
+		</div>
+		{% endif %}
+		</div>
+		
+		<div class="modal" id="editModal" role="dialog">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title">Edit Task</h4>
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <div class="modal-body">
+			        <form method="POST" action="/yourtodo">
+			         {% csrf_token %}
+			          	<div class="form-group">
+				      		<label for="usr">Title:</label>
+							<input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+					  	</div>
+					  	<div class="form-group">
+						  	<label for="comment">Description:</label>
+						  	<textarea class="form-control" rows="5" id="description" placeholder="Type your description here...." name="description" required></textarea>
+						</div>
+						<!-- <div class="form-group">
+		  	    	      	<label>Deadline</label>
+	  					  	<input type="date" name="deadline" id="deadline">
+						</div> -->
+						<div class="form-group">
+						  	<button type="button" class="btn btn-success saveTask">SAVE</button>
+						</div>
+					</form>
+		        </div>
+		      </div>
+		    </div>
+	  </div>
+	</div>
+	<div class="myAlert-top-success alert alert-success col-md-3">
+  		<strong>Success!</strong> Task Edited successfully
+	</div>
+	
+	<script src = "{% static "scripts/personaltodo.js" %}"></script>
+{% endblock %}

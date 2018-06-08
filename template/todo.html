@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Todo
+{% endblock %}
+{% block style1 %}
+	<link rel="stylesheet" href='{% static "css/todo.css" %}'>
+{% endblock %}
+
+{% block content %}
+	<div class="container-fluid" style="margin-top:80px;">
+		<div style="margin:10px;">
+			<div class="clearfix">
+				<span class="float-left">
+					<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#createModal" style="border-radius: 50px;"><i class="fa fa-plus"></i> New Task</button>
+				</span>
+				{% if tasklist %}
+					<span class="float-right">
+						<button type="button" class="btn btn-success btn-md" id = "hidebutton" style="border-radius: 50px;">Hide Marked Done</button>
+					</span>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row">
+		{% if tasklist %}
+			{% for i in tasklist %}
+				{% if i.status %}
+					<div class="col-sm-3 done">
+				{% else %}
+					<div class="col-sm-3 notdone">
+				{% endif %}
+					<div class="card">
+					  {% if i.status %}
+						  <div id="{{i.id}}cardheader" class="card-header" style="background-color:#61bd4f;">
+
+						  	<a class="card-link" data-toggle="collapse" href="#{{ i.id }}">
+		        				{{ i.title }}
+		      				</a>
+						  </div>
+					  {% else %}
+					  	  <div id="{{i.id}}cardheader" class="card-header" style="background-color:#d29034;"">
+
+						  	<a class="card-link" data-toggle="collapse" href="#{{ i.id }}">
+		        				{{ i.title }}
+		      				</a>
+						  </div>
+					  {% endif %}
+					  <div id="{{ i.id }}" class="collapse" data-parent="#accordion">
+					      <div class="card-body" style="overflow:auto;">
+					        <!-- <p class="card-text">Some text inside the first card</p> -->
+
+					        <dl>
+								<dt>Description:</dt>
+								<dd>{{ i.description }}</dd>
+								<dt>Created At:</dt>
+								<dd>{{ i.created_at }}</dd>
+								{% if i.deadline %}
+									<dt>Deadline:</dt>
+									<dd>{{ i.deadline }}</dd>
+								{% endif %}
+								<dt>Created By:</dt>
+								<dd style="text-align: justify;">{{ i.user.first_name }} {{ i.user.last_name }}</dd>
+								{% if i.status %}
+								  <dt>Status changed By:</dt>
+								  <dd>{{ i.status_change_by.first_name }} {{ i.status_change_by.last_name }}</dd>
+							  	{% endif %}
+							</dl>
+							{% if not i.status %}
+					        	<button type="button" data-id="{{ i.id }}" class="btn btn-success btn-sm statusEditButton">Mark As Done</button>
+					        {% else %}
+					        	<button type="button" data-id="{{ i.id }}" class="btn btn-success btn-sm statusEditButton">Mark As Undone</button>
+					        {% endif %}
+					      </div>
+					   </div>
+				    </div><br />
+				 </div>
+			{% endfor %}
+		{% else %}
+			<div class="col-md-12">
+				<h1 align="center">No one has created any task, Create new task</h1>
+			</div>
+		{% endif %}
+		</div>
+
+		<!-- modal to create new task -->
+		<div class="modal fade" id="createModal" role="dialog">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title">New Task</h4>
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <div class="modal-body">
+			        <form method="post" action="/todo">
+			         {% csrf_token %}
+			          	<div class="form-group">
+				      		<label for="usr">Title:</label>
+							<input type="text" class="form-control" id="title" placeholder="Title" name="title" required>
+					  	</div>
+					  	<div class="form-group">
+						  	<label for="comment">Description:</label>
+						  	<textarea class="form-control" rows="5" id="comment" placeholder="Type your description here...." name="description" required></textarea>
+						</div>
+						<!-- <div class="form-group">
+		  	    	      	<label>Deadline</label>
+	  					  	<input type="date" name="deadline" id="deadline">
+						</div> -->
+						<div class="form-group">
+						  	<button type="submit" class="btn btn-success">Submit</button>
+						</div>
+					</form>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+
+		    </div>
+	  </div>
+	</div>
+
+	<!-- Alert for success or error -->
+	<div class="myAlert-top-success alert alert-success col-md-3">
+	  <!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+	  <strong>Success!</strong> Status has been changed.
+	</div>
+	<div class="myAlert-top-error alert alert-danger col-md-3">
+	  <!-- <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+	  <strong>Error!</strong> Status not changed, Please try later
+	</div>
+
+	<!-- Javascript Scripts -->
+	<script src = "{% static "scripts/todo.js" %}"></script>
+{% endblock %}

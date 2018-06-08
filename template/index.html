@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	Index
+{% endblock %}
+{% block content %}
+	{% if not user.is_authenticated %}
+		<div class="container" style="margin-top:80px;">
+			<h2 align="center"><b>Welcome to ToDoBest, for work management.<br /><a href="/login">Login</a>/<a href="/register">Register</a> to create and view tasks.</b></h2>
+		</div>
+	{% else %}
+		<div class="container" style="margin-top:80px;">
+			<h2 align="center"><b>Create New Todo</b><br /> <b>View All Todo</b> <br /> <b>Edit Your Todo</b><br /> <b>Delete Your Todo</b><br /> <b>Mark as Done</b></h2>
+		</div>
+	{% endif %}
+{% endblock %}
