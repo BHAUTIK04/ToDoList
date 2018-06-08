@@ -21,6 +21,9 @@ To deploy this project:-
 * Activate created virtualenv Eg:- source name/bin/activate
 * Go to project folder Here todo/
 * Install all required packages using 'pip install -r requirements.txt'
+* To create initial database:- 
+	* python manage.py makemigrations
+	* python manage.py migrate
 * To start project:- Run python manage.py runserver
 * By default project will start on localhost:8000 or 127.0.0.1:8000
 * For running on particular port and IP:- python manage.py runserver IP:PORT 
@@ -32,6 +35,9 @@ To deploy this project:-
 * Make sure your environment supports Python3
 * Go to project folder Here todo/
 * Install all required ppackages using 'sudo pip install -r requirements.txt'
+* To create initial database:- 
+	* python manage.py makemigrations
+	* python manage.py migrate
 * To start project:- Run python manage.py runserver
 * By default project will start on localhost:8000 or 127.0.0.1:8000
 * For running on particular port and IP:- python manage.py runserver IP:PORT
