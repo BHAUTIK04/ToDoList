@@ -15,7 +15,7 @@ App for todos.
 To deploy this project:-
 
 ### Using virtualenv
-```
+
 * Make sure your environment supports Python3
 * Create virtualenv with some name for python3 Eg:- virtualenv name --python=python3
 * Activate created virtualenv Eg:- source name/bin/activate
@@ -28,7 +28,7 @@ To deploy this project:-
 * By default project will start on localhost:8000 or 127.0.0.1:8000
 * For running on particular port and IP:- python manage.py runserver IP:PORT 
 * To run test cases:- python manage.py test -v=2
-```
+
 
 ### Without virtualenv
 ```
