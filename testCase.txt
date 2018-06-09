@@ -1,0 +1,36 @@
+
+1) Change status form undone to done
+	test_status_change_success (todoApp.tests.ChangeStatus)
+
+2) Tid is invalid while changing status
+	test_status_invalid_tid (todoApp.tests.ChangeStatus)
+
+3) Request status change without id
+	test_status_tid_not_given (todoApp.tests.ChangeStatus)
+
+4) Delete task from different user other than owner of task
+	test_delete_task_different_user_failed (todoApp.tests.DeleteTaskTest)
+
+5) Delete task with proper user
+	test_delete_task_success (todoApp.tests.DeleteTaskTest)
+
+6) Delete task with id which is not present
+	test_delete_task_wrong_task_id_failed (todoApp.tests.DeleteTaskTest)
+
+7) Edit task which has not required information to edit
+	test_edit_task_fail (todoApp.tests.EditTaskTest)
+
+8) Edit task with appropriate values
+	test_edit_task_success (todoApp.tests.EditTaskTest)
+
+9) User login fail with unregistered user
+	test_user_login_fail (todoApp.tests.RegisterUserTest)
+
+10) User login with registered user
+	test_user_login_success (todoApp.tests.RegisterUserTest)
+
+11) Create new todo item
+	test_create_todo (todoApp.tests.TodoOperationTest)
+
+12) Get created todo items
+	test_get_todo (todoApp.tests.TodoOperationTest)
