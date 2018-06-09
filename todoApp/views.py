@@ -151,15 +151,14 @@ def todo_operation(request):
 
 @csrf_exempt
 @login_required(login_url='/login')
-def change_status(request):
+def change_status(request, tid):
     '''
         To change task status if its Done than change to Undone and if its Undone than change to Done
     '''
     try:
         if request.method == "PUT":
-            request_data = json.loads(request.body.decode('utf-8'))
-            if request_data and request_data.get("tid", ""):
-                task_list = tasklist.objects.get(id=request_data["tid"])
+            if tid:
+                task_list = tasklist.objects.get(id=tid)
                 if task_list.status:
                     logger.info("status changed for task {} form Done to Undone".format(task_list.id))
                     task_list.status = False
@@ -174,8 +173,11 @@ def change_status(request):
                 return HttpResponse(json.dumps({"message":"task id not given"}), status=400, content_type="application/json")
         else:
             return HttpResponse(json.dumps({"message":"Method not allowed"}), status=503, content_type="application/json")
+    except ObjectDoesNotExist:
+            return HttpResponse(json.dumps({"response":"Task not available"}), status=400)
     except Exception as e:
         logger.error("Error in change status request {}".format(e))
+        print(str(e))
         return HttpResponse(json.dumps({"message":"data format error"}), status=400, content_type="application/json")
 
 @csrf_exempt

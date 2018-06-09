@@ -61,7 +61,7 @@ class ChangeStatus(TestCase):
         response = self.client.get('/todo', follow=True)
         tid = response.context["tasklist"][0].id
         previous_status = response.context["tasklist"][0].status
-        self.client.post('/statuschange',{"tid": tid},follow=True)
+        self.client.put('/statuschange/'+str(tid), follow=True)
         response = self.client.get('/todo', follow=True)
         self.assertFalse(response.context["tasklist"][0].status == previous_status)
         
@@ -69,8 +69,15 @@ class ChangeStatus(TestCase):
         self.client.post('/login', self.user, follow=True)
         data = {"title":"test", "description":"this is testcase"}
         self.client.post('/todo', data, follow=True)
-        response = self.client.post('/statuschange',{"tid": ""},follow=True)
-        self.assertTrue(response.json()["message"] == "task id not given")
+        response = self.client.put('/statuschange/', follow=True)
+        self.assertTrue(response.status_code == 404)
+    
+    def test_status_invalid_tid(self):
+        self.client.post('/login', self.user, follow=True)
+        tid = '0000'
+        response = self.client.put('/statuschange/'+tid, follow=True)
+        self.assertTrue(response.status_code == 400)
+        
         
 class EditTaskTest(TestCase):
     
@@ -110,6 +117,7 @@ class EditTaskTest(TestCase):
         response = json.loads(edit_response.content.decode("utf-8"))
         self.assertTrue(response['response'] == "Insufficient_data")
         self.assertTrue(edit_response.status_code == 400)
+        
         
 class DeleteTaskTest(TestCase):
     def setUp(self):

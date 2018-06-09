@@ -11,6 +11,6 @@ urlpatterns = [
     url(r'^todo$', views.todo_operation),
     url(r'^yourtodo$', views.your_todo_operation),
     url(r'^task/(?P<tid>[0-9]+)$', views.single_task_operation),
-    url(r'^statuschange$', views.change_status),
+    url(r'^statuschange/(?P<tid>[0-9]+)$$', views.change_status),
     url(r'^error$', views.error)
 ]

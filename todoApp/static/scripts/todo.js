@@ -18,11 +18,8 @@ $(document).ready(function(){
 		/* if (confirm('Are you sure you want to change status?')) { */
 			
 	        $.ajax({
-	            url: '/statuschange',
-	            type: "POST",
-	            data: {
-	                "tid":id
-	            },
+	            url: '/statuschange/'+id,
+	            type: "PUT",
 	            success: function (response) {
 	            	successAlert();
 	                /* console.log(but); */
