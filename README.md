@@ -54,3 +54,12 @@ To deploy this project:-
 * Edit your Todo
 * Delete your Todo
 * User Logout
+
+### Hi there 👋
+![Kovid's GitHub stats](https://github-readme-stats.vercel.app/api?username=BHAUTIK04&theme=dracula&show_icons=true&include_all_commits=true)
+
+
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=BHAUTIK04&layout=compact&theme=dracula)](https://github.com/anuraghazra/github-readme-stats)
+
+[![GitHub Streak](https://streak-stats.demolab.com/?user=BHAUTIK04&theme=dracula)](https://git.io/streak-stats)
